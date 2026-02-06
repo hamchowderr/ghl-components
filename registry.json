@@ -1,80 +1,145 @@
 {
   "$schema": "https://ui.shadcn.com/schema/registry.json",
-  "name": "acme",
-  "homepage": "https://acme.com",
+  "name": "ghl-components",
+  "homepage": "https://ghl-components.vercel.app",
   "items": [
     {
-      "name": "hello-world",
+      "name": "ghl-provider",
       "type": "registry:component",
-      "title": "Hello World",
-      "description": "A simple hello world component",
-      "registryDependencies": ["button"],
+      "title": "GHL Provider",
+      "description": "Context provider for GoHighLevel authentication, token management, and location context.",
+      "dependencies": [],
+      "registryDependencies": [],
+      "files": [{ "path": "registry/new-york/auth/ghl-provider.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-connect-button",
+      "type": "registry:component",
+      "title": "GHL Connect Button",
+      "description": "OAuth connect button for GoHighLevel authentication.",
+      "dependencies": [],
+      "registryDependencies": ["button", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/auth/ghl-connect-button.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-oauth-callback",
+      "type": "registry:component",
+      "title": "GHL OAuth Callback",
+      "description": "Callback page handler for GoHighLevel OAuth flow.",
+      "dependencies": [],
+      "registryDependencies": ["card", "skeleton", "alert", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/auth/ghl-oauth-callback.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-location-switcher",
+      "type": "registry:component",
+      "title": "GHL Location Switcher",
+      "description": "Switch between GHL locations for agency accounts.",
+      "dependencies": [],
+      "registryDependencies": ["select", "avatar", "badge", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/auth/ghl-location-switcher.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-contact-card",
+      "type": "registry:component",
+      "title": "GHL Contact Card",
+      "description": "Display card for a GoHighLevel contact with name, email, phone, and tags.",
+      "dependencies": [],
+      "registryDependencies": ["card", "avatar", "badge", "dropdown-menu", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/contacts/ghl-contact-card.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-contact-form",
+      "type": "registry:component",
+      "title": "GHL Contact Form",
+      "description": "Create or edit a GoHighLevel contact with full validation.",
+      "dependencies": ["zod", "sonner"],
+      "registryDependencies": ["card", "input", "label", "button", "switch", "badge", "alert", "command", "popover", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/contacts/ghl-contact-form.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-contact-list",
+      "type": "registry:component",
+      "title": "GHL Contact List",
+      "description": "Scrollable list of GoHighLevel contacts with pagination.",
+      "dependencies": [],
+      "registryDependencies": ["scroll-area", "card", "skeleton", "pagination", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/contacts/ghl-contact-list.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-contact-search",
+      "type": "registry:component",
+      "title": "GHL Contact Search",
+      "description": "Search input with typeahead for finding GoHighLevel contacts.",
+      "dependencies": [],
+      "registryDependencies": ["command", "popover", "input", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/contacts/ghl-contact-search.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-contact-picker",
+      "type": "registry:component",
+      "title": "GHL Contact Picker",
+      "description": "Modal dialog to select one or more GoHighLevel contacts.",
+      "dependencies": [],
+      "registryDependencies": ["dialog", "command", "input", "button", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/contacts/ghl-contact-picker.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-tag-manager",
+      "type": "registry:component",
+      "title": "GHL Tag Manager",
+      "description": "Add and remove tags from a GoHighLevel contact with autocomplete.",
+      "dependencies": [],
+      "registryDependencies": ["popover", "command", "badge", "input", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/contacts/ghl-tag-manager.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-webhook-handler",
+      "type": "registry:lib",
+      "title": "GHL Webhook Handler",
+      "description": "Server-side utilities for handling GoHighLevel webhooks with signature verification.",
+      "dependencies": [],
+      "registryDependencies": [],
       "files": [
-        {
-          "path": "registry/new-york/blocks/hello-world/hello-world.tsx",
-          "type": "registry:component"
-        }
+        { "path": "registry/new-york/server/webhook-handler.ts", "type": "registry:lib" },
+        { "path": "registry/new-york/server/verify-signature.ts", "type": "registry:lib" },
+        { "path": "registry/new-york/server/constants.ts", "type": "registry:lib" }
       ]
     },
     {
-      "name": "example-form",
-      "type": "registry:component",
-      "title": "Example Form",
-      "description": "A contact form with Zod validation.",
-      "dependencies": ["zod"],
-      "registryDependencies": ["button", "input", "label", "textarea", "card"],
+      "name": "ghl-types",
+      "type": "registry:lib",
+      "title": "GHL Types",
+      "description": "TypeScript types for GoHighLevel entities.",
+      "dependencies": [],
+      "registryDependencies": [],
       "files": [
-        {
-          "path": "registry/new-york/blocks/example-form/example-form.tsx",
-          "type": "registry:component"
-        }
+        { "path": "registry/new-york/server/types/index.ts", "type": "registry:lib" },
+        { "path": "registry/new-york/server/types/contact.ts", "type": "registry:lib" },
+        { "path": "registry/new-york/server/types/opportunity.ts", "type": "registry:lib" },
+        { "path": "registry/new-york/server/types/calendar.ts", "type": "registry:lib" },
+        { "path": "registry/new-york/server/types/conversation.ts", "type": "registry:lib" },
+        { "path": "registry/new-york/server/types/webhook.ts", "type": "registry:lib" },
+        { "path": "registry/new-york/server/types/oauth.ts", "type": "registry:lib" }
       ]
     },
     {
-      "name": "complex-component",
+      "name": "ghl-time-slot-grid",
       "type": "registry:component",
-      "title": "Complex Component",
-      "description": "A complex component showing hooks, libs and components.",
-      "registryDependencies": ["card"],
-      "files": [
-        {
-          "path": "registry/new-york/blocks/complex-component/page.tsx",
-          "type": "registry:page",
-          "target": "app/pokemon/page.tsx"
-        },
-        {
-          "path": "registry/new-york/blocks/complex-component/components/pokemon-card.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "registry/new-york/blocks/complex-component/components/pokemon-image.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "registry/new-york/blocks/complex-component/lib/pokemon.ts",
-          "type": "registry:lib"
-        },
-        {
-          "path": "registry/new-york/blocks/complex-component/hooks/use-pokemon.ts",
-          "type": "registry:hook"
-        }
-      ]
+      "title": "GHL Time Slot Grid",
+      "description": "Visual time slot grid component that displays available time slots in a responsive grid with grouping by time of day (morning/afternoon/evening).",
+      "dependencies": ["date-fns"],
+      "registryDependencies": ["button", "badge"],
+      "files": [{ "path": "registry/new-york/calendars/ghl-time-slot-grid.tsx", "type": "registry:component" }]
     },
     {
-      "name": "example-with-css",
+      "name": "ghl-availability-picker",
       "type": "registry:component",
-      "title": "Example with CSS",
-      "description": "A login form with a CSS file.",
-      "files": [
-        {
-          "path": "registry/new-york/blocks/example-with-css/example-card.tsx",
-          "type": "registry:component"
-        },
-        {
-          "path": "registry/new-york/blocks/example-with-css/example-card.css",
-          "type": "registry:component"
-        }
-      ]
+      "title": "GHL Availability Picker",
+      "description": "Availability picker component with calendar and time slot selection. Combines date selection with available time slots from GoHighLevel.",
+      "dependencies": ["date-fns", "lucide-react"],
+      "registryDependencies": ["calendar", "button", "scroll-area", "skeleton", "ghl-time-slot-grid", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/calendars/ghl-availability-picker.tsx", "type": "registry:component" }]
     }
   ]
 }
