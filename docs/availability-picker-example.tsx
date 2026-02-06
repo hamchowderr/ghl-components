@@ -22,13 +22,7 @@ export function BasicAvailabilityPickerExample() {
   }
 
   return (
-    <GHLProvider
-      config={{
-        clientId: process.env.NEXT_PUBLIC_GHL_CLIENT_ID!,
-        clientSecret: process.env.NEXT_PUBLIC_GHL_CLIENT_SECRET!,
-        redirectUri: process.env.NEXT_PUBLIC_GHL_REDIRECT_URI!,
-      }}
-    >
+    <GHLProvider>
       <Card className="w-full max-w-2xl">
         <CardHeader>
           <CardTitle>Book an Appointment</CardTitle>
@@ -128,13 +122,7 @@ export function BookingFlowExample() {
   }
 
   return (
-    <GHLProvider
-      config={{
-        clientId: process.env.NEXT_PUBLIC_GHL_CLIENT_ID!,
-        clientSecret: process.env.NEXT_PUBLIC_GHL_CLIENT_SECRET!,
-        redirectUri: process.env.NEXT_PUBLIC_GHL_REDIRECT_URI!,
-      }}
-    >
+    <GHLProvider>
       <Card className="w-full max-w-2xl">
         <CardHeader>
           <CardTitle>
@@ -234,13 +222,7 @@ export function CustomizedAvailabilityPickerExample() {
   tomorrow.setDate(tomorrow.getDate() + 1)
 
   return (
-    <GHLProvider
-      config={{
-        clientId: process.env.NEXT_PUBLIC_GHL_CLIENT_ID!,
-        clientSecret: process.env.NEXT_PUBLIC_GHL_CLIENT_SECRET!,
-        redirectUri: process.env.NEXT_PUBLIC_GHL_REDIRECT_URI!,
-      }}
-    >
+    <GHLProvider>
       <Card className="w-full max-w-2xl">
         <CardHeader>
           <CardTitle>Schedule Consultation</CardTitle>
