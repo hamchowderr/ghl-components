@@ -64,11 +64,28 @@ export function useGHLAuth(): UseGHLAuthReturn {
       }
 
       try {
-        // Generate the OAuth authorization URL
-        const authUrl = client.oauth.generateAuthUrl({
-          scopes,
-          state: generateRandomState(),
+        // Build OAuth authorization URL manually
+        // The GHL client doesn't expose generateAuthUrl, so we construct it
+        const clientId = process.env.NEXT_PUBLIC_GHL_CLIENT_ID
+        const redirectUri = process.env.NEXT_PUBLIC_GHL_REDIRECT_URI
+        const state = generateRandomState()
+
+        if (!clientId || !redirectUri) {
+          throw new Error("Missing GHL OAuth configuration")
+        }
+
+        const params = new URLSearchParams({
+          response_type: "code",
+          client_id: clientId,
+          redirect_uri: redirectUri,
+          scope: scopes.join(" "),
+          state,
         })
+
+        const authUrl = `https://marketplace.gohighlevel.com/oauth/chooselocation?${params.toString()}`
+
+        // Store state for CSRF validation
+        sessionStorage.setItem("ghl_oauth_state", state)
 
         // Redirect to GHL OAuth page
         window.location.href = authUrl
@@ -93,10 +110,18 @@ export function useGHLAuth(): UseGHLAuthReturn {
       }
 
       try {
-        // Exchange authorization code for access token
-        await client.oauth.getAccessToken(code)
+        // Exchange authorization code for access token via API route
+        // The token exchange should happen server-side to protect client_secret
+        const response = await fetch("/api/auth/callback/ghl", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ code }),
+        })
 
-        // The SDK automatically stores the session
+        if (!response.ok) {
+          throw new Error("Failed to exchange authorization code")
+        }
+
         // Force a page reload or state update to reflect authentication
         window.location.href = window.location.origin
       } catch (error) {
@@ -117,8 +142,11 @@ export function useGHLAuth(): UseGHLAuthReturn {
     }
 
     try {
-      // Clear the session storage
-      await client.oauth.clearSession()
+      // Clear any stored tokens via API route
+      await fetch("/api/auth/logout", { method: "POST" })
+
+      // Clear local session state
+      sessionStorage.removeItem("ghl_oauth_state")
 
       // Force a page reload to reset state
       window.location.href = window.location.origin
