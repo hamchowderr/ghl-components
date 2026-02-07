@@ -70,7 +70,7 @@ export function GHLTimeSlotGrid({
   slots,
   onSelect,
   selectedSlot,
-  date,
+  date: _date,
   className,
 }: GHLTimeSlotGridProps) {
   const now = new Date()

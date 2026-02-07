@@ -1,10 +1,10 @@
 "use client"
 
 import * as React from "react"
-import { MoreVertical, Mail, Phone, Building2, Loader2 } from "lucide-react"
+import { MoreVertical, Mail, Phone, Building2 } from "lucide-react"
 
 import { useGHLContact } from "@/hooks/use-ghl-contact"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -53,13 +53,12 @@ export function GHLContactCard({
   className,
 }: GHLContactCardProps) {
   // Fetch contact data if only ID is provided
-  const {
-    contact: fetchedContact,
-    isLoading,
-    error,
-  } = useGHLContact(contactId, {
+  const contactResult = useGHLContact(contactId, {
     enabled: !!contactId && !providedContact,
   })
+  const fetchedContact = contactResult.contact as typeof providedContact
+  const isLoading = contactResult.isLoading
+  const error = contactResult.error
 
   const contact = providedContact || fetchedContact
 
@@ -204,7 +203,7 @@ export function GHLContactCard({
         )}
         {showTags && contact.tags && contact.tags.length > 0 && (
           <div className="flex flex-wrap gap-2 pt-2">
-            {contact.tags.map((tag, index) => (
+            {contact.tags.map((tag: string, index: number) => (
               <Badge key={`${tag}-${index}`} variant="secondary">
                 {tag}
               </Badge>
@@ -215,7 +214,7 @@ export function GHLContactCard({
           contact.customFields &&
           contact.customFields.length > 0 && (
             <div className="space-y-2 pt-2 border-t">
-              {contact.customFields.map((field) => (
+              {contact.customFields.map((field: { id: string; name: string; value: string }) => (
                 <div key={field.id} className="flex justify-between text-sm">
                   <span className="text-muted-foreground">{field.name}:</span>
                   <span className="font-medium">{field.value}</span>

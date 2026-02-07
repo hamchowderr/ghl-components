@@ -106,15 +106,16 @@ export function GHLLocationSwitcher({
 
       try {
         // Fetch all locations accessible to the user
-        const response = await client.locations.getAllLocations()
+        const response = await client.locations.searchLocations({})
 
         // Transform response to our Location interface
+        // Note: searchLocations doesn't return logoUrl, only getLocation does
         const fetchedLocations: Location[] =
-          response.locations?.map((loc: any) => ({
-            id: loc.id,
+          response.locations?.map((loc) => ({
+            id: loc.id || "",
             name: loc.name || "Unnamed Location",
             address: loc.address,
-            logoUrl: loc.logoUrl,
+            logoUrl: undefined, // logoUrl not available from searchLocations
           })) || []
 
         setLocations(fetchedLocations)

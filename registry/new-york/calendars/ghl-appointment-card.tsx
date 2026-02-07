@@ -3,7 +3,7 @@
 import * as React from "react"
 import { MoreVertical, Calendar, Clock, User, MapPin } from "lucide-react"
 import { format, parseISO } from "date-fns"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
+import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
@@ -32,7 +32,7 @@ export interface Appointment {
   calendarId?: string
   address?: string
   notes?: string
-  [key: string]: any
+  [key: string]: unknown
 }
 
 export interface GHLAppointmentCardProps {

@@ -59,9 +59,9 @@ export interface UpdateContactInput {
    */
   tags?: string[]
   /**
-   * Custom field values
+   * Custom field values as an array of objects with id and value
    */
-  customFields?: Record<string, string | number | boolean>
+  customFields?: Array<{ id: string; field_value: string | number | boolean | string[] }>
   /**
    * Contact source
    */
@@ -135,9 +135,9 @@ export interface UpdateContactInput {
 export function useGHLContactUpdate() {
   return useGHLMutation(
     (client, { contactId, ...data }: UpdateContactInput) =>
-      client.contacts.updateContact({ contactId, data }),
+      client.contacts.updateContact({ contactId }, data),
     {
-      onSuccess: (data, variables) => {
+      onSuccess: (data, _variables) => {
         console.log("Contact updated successfully:", data)
         // In the future, replace with: toast.success("Contact updated successfully")
       },

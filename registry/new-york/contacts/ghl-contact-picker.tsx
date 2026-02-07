@@ -99,12 +99,12 @@ export function GHLContactPicker({
 
   // Filter contacts if filter function is provided
   const contacts = React.useMemo(() => {
-    const contactList = data?.contacts || []
+    const contactList = (data as { contacts?: Contact[] } | null)?.contacts || []
     if (filter) {
       return contactList.filter(filter)
     }
     return contactList
-  }, [data?.contacts, filter])
+  }, [data, filter])
 
   // Reset selection when dialog closes
   React.useEffect(() => {
@@ -248,7 +248,7 @@ export function GHLContactPicker({
               )}
 
               {!isLoading &&
-                contacts.map((contact) => {
+                contacts.map((contact: Contact) => {
                   const isSelected = isContactSelected(contact.id)
                   return (
                     <button

@@ -140,6 +140,168 @@
       "dependencies": ["date-fns", "lucide-react"],
       "registryDependencies": ["calendar", "button", "scroll-area", "skeleton", "ghl-time-slot-grid", "ghl-provider"],
       "files": [{ "path": "registry/new-york/calendars/ghl-availability-picker.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-calendar-select",
+      "type": "registry:component",
+      "title": "GHL Calendar Select",
+      "description": "Searchable dropdown to select a GoHighLevel calendar.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "command", "popover", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/calendars/ghl-calendar-select.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-appointment-card",
+      "type": "registry:component",
+      "title": "GHL Appointment Card",
+      "description": "Display card for a GoHighLevel appointment with status, time, and contact info.",
+      "dependencies": ["date-fns", "lucide-react"],
+      "registryDependencies": ["card", "badge", "avatar", "button", "dropdown-menu"],
+      "files": [{ "path": "registry/new-york/calendars/ghl-appointment-card.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-appointment-list",
+      "type": "registry:component",
+      "title": "GHL Appointment List",
+      "description": "Scrollable list of GoHighLevel appointments grouped by date.",
+      "dependencies": ["date-fns", "lucide-react"],
+      "registryDependencies": ["scroll-area", "skeleton", "ghl-appointment-card", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/calendars/ghl-appointment-list.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-booking-form",
+      "type": "registry:component",
+      "title": "GHL Booking Form",
+      "description": "Complete booking form with calendar selection, availability picker, and contact details.",
+      "dependencies": ["date-fns", "lucide-react", "zod"],
+      "registryDependencies": ["card", "button", "input", "label", "textarea", "ghl-calendar-select", "ghl-availability-picker", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/calendars/ghl-booking-form.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-channel-icon",
+      "type": "registry:component",
+      "title": "GHL Channel Icon",
+      "description": "Icon indicator for message channels (SMS, Email, Facebook, Instagram, WhatsApp, etc.).",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": [],
+      "files": [{ "path": "registry/new-york/conversations/ghl-channel-icon.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-message-bubble",
+      "type": "registry:component",
+      "title": "GHL Message Bubble",
+      "description": "Single message display with direction-based styling, timestamp, channel icon, and status indicators.",
+      "dependencies": ["lucide-react", "date-fns"],
+      "registryDependencies": ["badge", "ghl-channel-icon"],
+      "files": [{ "path": "registry/new-york/conversations/ghl-message-bubble.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-channel-selector",
+      "type": "registry:component",
+      "title": "GHL Channel Selector",
+      "description": "Dropdown selector for choosing messaging channels (SMS, Email, WhatsApp, etc.).",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["select", "ghl-channel-icon"],
+      "files": [{ "path": "registry/new-york/conversations/ghl-channel-selector.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-conversation-header",
+      "type": "registry:component",
+      "title": "GHL Conversation Header",
+      "description": "Header component for conversation view with contact info, channel indicator, and quick actions.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["avatar", "badge", "button", "dropdown-menu", "ghl-channel-icon"],
+      "files": [{ "path": "registry/new-york/conversations/ghl-conversation-header.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-message-composer",
+      "type": "registry:component",
+      "title": "GHL Message Composer",
+      "description": "Message input with channel selector and send functionality using the useSendMessage hook.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "textarea", "input", "label", "ghl-channel-selector", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/conversations/ghl-message-composer.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-conversation-thread",
+      "type": "registry:component",
+      "title": "GHL Conversation Thread",
+      "description": "Scrollable message thread display with auto-scroll to newest messages.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["scroll-area", "button", "skeleton", "alert", "ghl-message-bubble", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/conversations/ghl-conversation-thread.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-conversation-list",
+      "type": "registry:component",
+      "title": "GHL Conversation List",
+      "description": "Inbox view of conversations with search, filtering, unread counts, and last message preview.",
+      "dependencies": ["lucide-react", "date-fns"],
+      "registryDependencies": ["avatar", "badge", "scroll-area", "skeleton", "alert", "button", "select", "input", "ghl-channel-icon", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/conversations/ghl-conversation-list.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-pipeline-select",
+      "type": "registry:component",
+      "title": "GHL Pipeline Select",
+      "description": "Dropdown to select a GoHighLevel pipeline with search functionality.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "command", "popover", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/opportunities/ghl-pipeline-select.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-opportunity-card",
+      "type": "registry:component",
+      "title": "GHL Opportunity Card",
+      "description": "Display card for a GoHighLevel opportunity with status, value, and stage information.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["card", "avatar", "badge", "button", "dropdown-menu", "skeleton", "alert", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/opportunities/ghl-opportunity-card.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-stage-selector",
+      "type": "registry:component",
+      "title": "GHL Stage Selector",
+      "description": "Dropdown to move an opportunity between pipeline stages with auto-move functionality.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "command", "popover", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/opportunities/ghl-stage-selector.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-opportunity-form",
+      "type": "registry:component",
+      "title": "GHL Opportunity Form",
+      "description": "Create or edit a GoHighLevel opportunity with full Zod validation.",
+      "dependencies": ["zod", "sonner", "lucide-react"],
+      "registryDependencies": ["card", "input", "label", "button", "select", "alert", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/opportunities/ghl-opportunity-form.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-stage-column",
+      "type": "registry:component",
+      "title": "GHL Stage Column",
+      "description": "A single kanban column containing opportunity cards for a pipeline stage.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "badge", "scroll-area", "skeleton", "ghl-opportunity-card"],
+      "files": [{ "path": "registry/new-york/opportunities/ghl-stage-column.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-opportunity-list",
+      "type": "registry:component",
+      "title": "GHL Opportunity List",
+      "description": "Scrollable list view of GoHighLevel opportunities with search, filtering, and pagination.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["scroll-area", "pagination", "skeleton", "alert", "input", "select", "ghl-opportunity-card", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/opportunities/ghl-opportunity-list.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-pipeline-board",
+      "type": "registry:component",
+      "title": "GHL Pipeline Board",
+      "description": "Full kanban board for GoHighLevel pipeline with stage columns and opportunity cards.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["button", "scroll-area", "alert", "skeleton", "ghl-stage-column", "ghl-pipeline-select", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/opportunities/ghl-pipeline-board.tsx", "type": "registry:component" }]
     }
   ]
 }

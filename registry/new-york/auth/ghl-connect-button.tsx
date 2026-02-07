@@ -6,7 +6,7 @@ import { Button } from "@/registry/new-york/ui/button"
 import { cn } from "@/lib/utils"
 
 interface GHLConnectButtonProps
-  extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+  extends Omit<React.ButtonHTMLAttributes<HTMLButtonElement>, "onError"> {
   /**
    * OAuth scopes to request from GoHighLevel.
    * @example ["contacts.readonly", "calendars.write", "opportunities.readonly"]

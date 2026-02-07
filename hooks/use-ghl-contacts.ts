@@ -70,12 +70,25 @@ export function useGHLContacts(
   params: UseGHLContactsParams,
   options?: { refetchInterval?: number }
 ) {
-  return useGHLQuery(
-    ["contacts", params.locationId, params.query, params.limit, params.offset],
+  const result = useGHLQuery(
+    ["contacts", params.locationId, params.query ?? "", String(params.limit ?? ""), String(params.offset ?? "")],
     (client) => client.contacts.searchContactsAdvanced(params),
     {
       enabled: !!params.locationId,
       ...options,
     }
   )
+
+  // Extract contacts and pagination from the result
+  const contacts = (result.data as { contacts?: unknown[] } | null)?.contacts || []
+  const pagination = result.data ? {
+    total: (result.data as { total?: number }).total,
+    count: contacts.length,
+  } : undefined
+
+  return {
+    ...result,
+    contacts,
+    pagination,
+  }
 }

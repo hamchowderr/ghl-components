@@ -88,7 +88,7 @@ export function GHLContactSearch({
     }
   )
 
-  const contacts = data?.contacts || []
+  const contacts = (data as { contacts?: Contact[] } | null)?.contacts || []
 
   // Get initials from contact name
   const getInitials = (contact: Contact) => {
@@ -174,7 +174,7 @@ export function GHLContactSearch({
             )}
             {!isLoading && contacts.length > 0 && (
               <CommandGroup>
-                {contacts.map((contact) => {
+                {contacts.map((contact: Contact) => {
                   const isSelected = isContactSelected(contact.id)
                   return (
                     <CommandItem

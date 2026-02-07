@@ -21,7 +21,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Button } from "@/components/ui/button"
 import { Alert, AlertDescription } from "@/components/ui/alert"
-import { Textarea } from "@/components/ui/textarea"
+import { Textarea } from "@/registry/new-york/ui/textarea"
 import { Calendar } from "@/components/ui/calendar"
 import {
   Popover,
@@ -34,7 +34,7 @@ import { cn } from "@/lib/utils"
 const bookingFormSchema = z.object({
   calendarId: z.string().min(1, "Calendar is required"),
   selectedDate: z.date({
-    required_error: "Date is required",
+    message: "Date is required",
   }),
   selectedTime: z.string().min(1, "Time slot is required"),
   title: z.string().optional(),
@@ -156,7 +156,7 @@ export function GHLBookingForm({
   // Populate contact info if contactData is available
   const contact = React.useMemo(() => {
     if (!contactData) return null
-    const data = contactData as any
+    const data = contactData as { firstName?: string; lastName?: string; email?: string; phone?: string }
     return {
       name: `${data.firstName || ""} ${data.lastName || ""}`.trim(),
       email: data.email || "",
@@ -254,7 +254,7 @@ export function GHLBookingForm({
 
       // Submit booking
       bookAppointment(appointmentData, {
-        onSuccess: (appointment) => {
+        onSuccess: (appointment: unknown) => {
           toast.success("Appointment booked successfully")
 
           // Reset form
@@ -270,11 +270,8 @@ export function GHLBookingForm({
 
           onSuccess?.(appointment)
         },
-        onError: (error) => {
-          const errorMessage =
-            error instanceof Error
-              ? error.message
-              : "Failed to book appointment"
+        onError: (error: Error) => {
+          const errorMessage = error.message || "Failed to book appointment"
           setFormState((prev) => ({
             ...prev,
             submitError: errorMessage,

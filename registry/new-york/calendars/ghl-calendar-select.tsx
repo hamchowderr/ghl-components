@@ -4,6 +4,12 @@ import * as React from "react"
 import { Check, ChevronsUpDown, Loader2 } from "lucide-react"
 
 import { useGHLCalendars } from "@/hooks/use-ghl-calendars"
+
+interface Calendar {
+  id: string
+  name: string
+  description?: string
+}
 import { Button } from "@/components/ui/button"
 import {
   Command,
@@ -42,11 +48,11 @@ export function GHLCalendarSelect({
   )
 
   const calendars = React.useMemo(() => {
-    return (data as any)?.calendars || []
+    return (data as { calendars?: Calendar[] })?.calendars || []
   }, [data])
 
   const selectedCalendar = React.useMemo(() => {
-    return calendars.find((cal: any) => cal.id === value)
+    return calendars.find((cal: Calendar) => cal.id === value)
   }, [calendars, value])
 
   const handleSelect = React.useCallback(
@@ -120,7 +126,7 @@ export function GHLCalendarSelect({
           <CommandInput placeholder="Search calendars..." />
           <CommandEmpty>No calendar found.</CommandEmpty>
           <CommandGroup>
-            {calendars.map((calendar: any) => (
+            {calendars.map((calendar: Calendar) => (
               <CommandItem
                 key={calendar.id}
                 value={calendar.name}

@@ -29,11 +29,12 @@ interface UseGHLMutationOptions<TData, TVariables> {
   invalidateQueries?: string[][]
 }
 
-interface UseGHLMutationReturn<TData, TVariables> {
-  mutate: (variables: TVariables) => Promise<void>
+export interface UseGHLMutationReturn<TData, TVariables> {
+  mutate: (variables: TVariables, options?: { onSuccess?: (data: TData) => void; onError?: (error: Error) => void }) => Promise<void>
   mutateAsync: (variables: TVariables) => Promise<TData>
   data: TData | null
   isLoading: boolean
+  isPending: boolean
   error: Error | null
   reset: () => void
 }
@@ -162,12 +163,16 @@ export function useGHLMutation<TData, TVariables = void>(
   )
 
   const mutate = useCallback(
-    async (variables: TVariables) => {
+    async (variables: TVariables, options?: { onSuccess?: (data: TData) => void; onError?: (error: Error) => void }) => {
       try {
-        await mutateAsync(variables)
+        const result = await mutateAsync(variables)
+        options?.onSuccess?.(result)
       } catch (err) {
         // Error is already handled in mutateAsync
-        // This is the fire-and-forget version
+        // Call onError callback if provided
+        if (options?.onError && err instanceof Error) {
+          options.onError(err)
+        }
       }
     },
     [mutateAsync]
@@ -178,6 +183,7 @@ export function useGHLMutation<TData, TVariables = void>(
     mutateAsync,
     data,
     isLoading,
+    isPending: isLoading,
     error,
     reset,
   }

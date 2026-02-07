@@ -85,7 +85,7 @@ export function GHLAvailabilityPicker({
     timezone,
   })
 
-  const slots = availabilityData?.slots || []
+  const slots = (availabilityData as { slots?: TimeSlot[] } | null)?.slots || []
 
   const handleDateSelect = (newDate: Date | undefined) => {
     if (newDate) {

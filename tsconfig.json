@@ -17,5 +17,5 @@
     "paths": { "@/*": ["./*"] }
   },
   "include": ["next-env.d.ts", "vitest.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
-  "exclude": ["node_modules", "docs", "hooks"]
+  "exclude": ["node_modules", "docs", "**/*.stories.tsx", "**/*.stories.ts", "stories"]
 }

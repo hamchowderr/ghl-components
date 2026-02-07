@@ -59,9 +59,9 @@ export interface CreateContactInput {
    */
   tags?: string[]
   /**
-   * Custom field values
+   * Custom field values as an array of objects with id and value
    */
-  customFields?: Record<string, string | number | boolean>
+  customFields?: Array<{ id: string; field_value: string | number | boolean | string[] }>
   /**
    * Contact source
    */

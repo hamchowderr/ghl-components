@@ -31,3 +31,8 @@ playwright/.cache
 
 # Windows artifacts
 nul
+
+.vercel
+
+*storybook.log
+storybook-static

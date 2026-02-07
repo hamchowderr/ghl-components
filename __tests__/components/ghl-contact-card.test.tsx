@@ -5,9 +5,12 @@ import userEvent from "@testing-library/user-event"
 // Mock the hook
 vi.mock("@/hooks/use-ghl-contact", () => ({
   useGHLContact: vi.fn(() => ({
+    data: null,
     contact: null,
     isLoading: false,
+    isPending: false,
     error: null,
+    refetch: vi.fn(),
   })),
 }))
 
@@ -193,8 +196,10 @@ describe("GHLContactCard", () => {
   describe("when loading", () => {
     it("shows skeleton loading state", () => {
       mockUseGHLContact.mockReturnValue({
+        data: null,
         contact: null,
         isLoading: true,
+        isPending: true,
         error: null,
         refetch: vi.fn(),
       })
@@ -208,8 +213,10 @@ describe("GHLContactCard", () => {
   describe("when error occurs", () => {
     it("shows error alert", () => {
       mockUseGHLContact.mockReturnValue({
+        data: null,
         contact: null,
         isLoading: false,
+        isPending: false,
         error: new Error("Failed to fetch"),
         refetch: vi.fn(),
       })
@@ -229,8 +236,10 @@ describe("GHLContactCard", () => {
   describe("when no contact found", () => {
     it("shows not found alert", () => {
       mockUseGHLContact.mockReturnValue({
+        data: null,
         contact: null,
         isLoading: false,
+        isPending: false,
         error: null,
         refetch: vi.fn(),
       })

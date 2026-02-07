@@ -42,12 +42,17 @@ export function useGHLContact(
   contactId: string | undefined,
   options?: { refetchInterval?: number; enabled?: boolean }
 ) {
-  return useGHLQuery(
-    ["contact", contactId],
+  const result = useGHLQuery(
+    ["contact", contactId ?? ""],
     (client) => client.contacts.getContact({ contactId: contactId! }),
     {
       enabled: !!contactId && (options?.enabled ?? true),
       ...options,
     }
   )
+
+  return {
+    ...result,
+    contact: result.data,
+  }
 }

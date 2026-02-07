@@ -82,7 +82,7 @@ export interface CancelAppointmentInput {
 export function useGHLCancelAppointment() {
   return useGHLMutation(
     (client, input: CancelAppointmentInput) =>
-      client.calendars.deleteEvent({ eventId: input.eventId }),
+      client.calendars.deleteEvent({ eventId: input.eventId }, {}),
     {
       onSuccess: (data) => {
         console.log("Appointment canceled successfully:", data)

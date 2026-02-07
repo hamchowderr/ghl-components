@@ -25,9 +25,10 @@ interface UseGHLQueryOptions<TData> {
   onError?: (error: Error) => void
 }
 
-interface UseGHLQueryReturn<TData> {
+export interface UseGHLQueryReturn<TData> {
   data: TData | null
   isLoading: boolean
+  isPending: boolean
   error: Error | null
   refetch: () => Promise<void>
 }
@@ -158,9 +159,12 @@ export function useGHLQuery<TData>(
     await fetchData()
   }, [cacheKey, fetchData])
 
+  const loading = isClientLoading || isLoading
+
   return {
     data,
-    isLoading: isClientLoading || isLoading,
+    isLoading: loading,
+    isPending: loading,
     error,
     refetch,
   }

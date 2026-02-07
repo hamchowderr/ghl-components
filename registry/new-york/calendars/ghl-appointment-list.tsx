@@ -3,7 +3,6 @@
 import * as React from "react"
 import { CalendarX2 } from "lucide-react"
 import {
-  format,
   parseISO,
   isToday,
   isTomorrow,
@@ -89,7 +88,7 @@ export function GHLAppointmentList({
   )
 
   const appointments = React.useMemo(() => {
-    const events = (data as any)?.events
+    const events = (data as { events?: Appointment[] })?.events
     if (!events) return []
     // Sort by start time
     return [...events].sort((a: Appointment, b: Appointment) =>

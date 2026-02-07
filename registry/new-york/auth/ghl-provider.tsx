@@ -16,7 +16,6 @@ interface GHLProviderProps {
   children: ReactNode
   clientId?: string
   clientSecret?: string
-  redirectUri?: string
   logLevel?: "debug" | "info" | "warn" | "error"
 }
 
@@ -24,7 +23,6 @@ export function GHLProvider({
   children,
   clientId,
   clientSecret,
-  redirectUri,
   logLevel = "info",
 }: GHLProviderProps) {
   const [client, setClient] = useState<HighLevel | null>(null)
@@ -43,8 +41,6 @@ export function GHLProvider({
           clientId || process.env.NEXT_PUBLIC_GHL_CLIENT_ID
         const finalClientSecret =
           clientSecret || process.env.GHL_CLIENT_SECRET
-        const finalRedirectUri =
-          redirectUri || process.env.NEXT_PUBLIC_GHL_REDIRECT_URI
 
         if (!finalClientId || !finalClientSecret) {
           throw new Error(
@@ -56,19 +52,18 @@ export function GHLProvider({
         const ghlClient = new HighLevel({
           clientId: finalClientId,
           clientSecret: finalClientSecret,
-          redirectUri: finalRedirectUri,
           sessionStorage: new MemorySessionStorage(),
           logLevel,
         })
 
         setClient(ghlClient)
 
-        // Check if there's an existing session
+        // Check if there's an existing auth token
         // Note: With MemorySessionStorage, sessions are lost on page refresh
         // Upgrade to MongoDBSessionStorage for persistent sessions
         try {
-          const session = await ghlClient.oauth.getSession()
-          setIsAuthenticated(!!session)
+          const token = await ghlClient.getAuthToken()
+          setIsAuthenticated(!!token)
         } catch {
           setIsAuthenticated(false)
         }
@@ -81,7 +76,7 @@ export function GHLProvider({
     }
 
     initializeClient()
-  }, [clientId, clientSecret, redirectUri, logLevel])
+  }, [clientId, clientSecret, logLevel])
 
   const value: GHLContextValue = {
     client,

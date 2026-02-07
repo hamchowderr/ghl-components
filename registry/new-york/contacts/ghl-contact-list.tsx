@@ -55,17 +55,26 @@ export function GHLContactList({
   const limit = 10
 
   // Fetch contacts with search query
-  const {
-    contacts,
-    isLoading,
-    error,
-    pagination,
-  } = useGHLContacts({
+  const contactsResult = useGHLContacts({
     locationId,
     query: searchQuery,
     limit,
-    skip: (currentPage - 1) * limit,
+    offset: (currentPage - 1) * limit,
   })
+
+  const contacts = contactsResult.contacts as Array<{
+    id: string
+    firstName?: string
+    lastName?: string
+    email?: string
+    phone?: string
+    companyName?: string
+    tags?: string[]
+    [key: string]: unknown
+  }>
+  const isLoading = contactsResult.isLoading
+  const error = contactsResult.error
+  const pagination = contactsResult.pagination
 
   // Reset to page 1 when search query changes
   React.useEffect(() => {
@@ -189,7 +198,7 @@ export function GHLContactList({
     <div className={cn("flex flex-col gap-4", className)}>
       <ScrollArea className="flex-1">
         <div className="space-y-4">
-          {contacts.map((contact) => (
+          {contacts.map((contact: typeof contacts[0]) => (
             <div
               key={contact.id}
               onClick={() => handleContactClick(contact)}

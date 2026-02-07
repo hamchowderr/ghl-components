@@ -74,15 +74,26 @@ export function useGHLAvailability(
   params: UseGHLAvailabilityParams,
   options?: { refetchInterval?: number }
 ) {
+  // Convert date strings to timestamps (milliseconds)
+  const startDateTimestamp = new Date(params.startDate).getTime()
+  const endDateTimestamp = params.endDate
+    ? new Date(params.endDate).getTime()
+    : startDateTimestamp + 24 * 60 * 60 * 1000 // Default to end of day
+
   return useGHLQuery(
     [
       "availability",
       params.calendarId,
       params.startDate,
-      params.endDate,
-      params.timezone,
+      params.endDate ?? "",
+      params.timezone ?? "",
     ],
-    (client) => client.calendars.getFreeSlots(params),
+    (client) => client.calendars.getSlots({
+      calendarId: params.calendarId,
+      startDate: startDateTimestamp,
+      endDate: endDateTimestamp,
+      timezone: params.timezone,
+    }),
     {
       enabled: !!(params.calendarId && params.startDate),
       ...options,

@@ -17,8 +17,6 @@ export async function exec(
   const { cwd = process.cwd(), timeout = 300000, silent = false } = options
 
   return new Promise((resolve, reject) => {
-    const isWindows = process.platform === "win32"
-
     const child = spawn(command, {
       cwd,
       shell: true,

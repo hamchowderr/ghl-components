@@ -131,6 +131,8 @@ describe("Registry Validation", () => {
       "avatar",
       "dropdown-menu",
       "calendar",
+      "textarea",
+      "tabs",
     ])
 
     const invalidDeps: string[] = []

@@ -125,7 +125,22 @@ export interface BookAppointmentInput {
  */
 export function useGHLBookAppointment() {
   return useGHLMutation(
-    (client, data: BookAppointmentInput) => client.calendars.createEvent(data),
+    (client, data: BookAppointmentInput) => {
+      // contactId is required by the SDK
+      if (!data.contactId) {
+        return Promise.reject(new Error("contactId is required to book an appointment"))
+      }
+      return client.calendars.createAppointment({
+        calendarId: data.calendarId,
+        locationId: data.locationId,
+        contactId: data.contactId,
+        startTime: data.startTime,
+        endTime: data.endTime,
+        title: data.title,
+        appointmentStatus: data.status,
+        description: data.description,
+      })
+    },
     {
       onSuccess: (data) => {
         console.log("Appointment booked successfully:", data)

@@ -212,15 +212,12 @@ export function GHLContactForm({
             ...result.data,
           },
           {
-            onSuccess: (updatedContact) => {
+            onSuccess: (updatedContact: unknown) => {
               toast.success("Contact updated successfully")
               onSuccess?.(updatedContact)
             },
-            onError: (error) => {
-              const errorMessage =
-                error instanceof Error
-                  ? error.message
-                  : "Failed to update contact"
+            onError: (error: Error) => {
+              const errorMessage = error.message || "Failed to update contact"
               setFormState((prev) => ({
                 ...prev,
                 submitError: errorMessage,
@@ -245,7 +242,7 @@ export function GHLContactForm({
             ...result.data,
           },
           {
-            onSuccess: (newContact) => {
+            onSuccess: (newContact: unknown) => {
               toast.success("Contact created successfully")
               // Reset form for create mode
               const form = e.target as HTMLFormElement
@@ -266,11 +263,8 @@ export function GHLContactForm({
               })
               onSuccess?.(newContact)
             },
-            onError: (error) => {
-              const errorMessage =
-                error instanceof Error
-                  ? error.message
-                  : "Failed to create contact"
+            onError: (error: Error) => {
+              const errorMessage = error.message || "Failed to create contact"
               setFormState((prev) => ({
                 ...prev,
                 submitError: errorMessage,
