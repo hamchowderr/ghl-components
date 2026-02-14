@@ -20,6 +20,7 @@
     "test:registry:schema": "tsx scripts/tests/validate-schema.ts",
     "test:registry:endpoints": "tsx scripts/tests/test-endpoints.ts",
     "test:registry:install": "tsx scripts/tests/test-installation.ts",
+    "validate-env": "tsx scripts/validate-env.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -89,6 +90,9 @@
     "react",
     "nextjs"
   ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "author": "Chowderr",
   "license": "MIT"
 }
