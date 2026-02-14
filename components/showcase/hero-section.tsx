@@ -30,7 +30,7 @@ export function HeroSection() {
         </Button>
         <Button variant="outline" size="lg" asChild>
           <a
-            href="https://github.com/your-org/ghl-components"
+            href="https://github.com/hamchowderr/ghl-components"
             target="_blank"
             rel="noopener noreferrer"
           >

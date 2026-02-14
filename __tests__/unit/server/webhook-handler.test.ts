@@ -86,11 +86,15 @@ describe("withGHLWebhook", () => {
 
   it("deduplicates webhooks by webhookId", async () => {
     const onContactCreate = vi.fn()
-    const processedIds = new Set<string>()
+    const seen = new Set<string>()
+    const deduplicationCache = {
+      has: (id: string) => seen.has(id),
+      add: (id: string) => { seen.add(id) },
+    }
 
     const handler = withGHLWebhook(
       { onContactCreate },
-      { processedIds }
+      { deduplicationCache }
     )
 
     const body = {
@@ -109,14 +113,28 @@ describe("withGHLWebhook", () => {
     expect(json2.message).toBe("Already processed")
   })
 
+  it("returns 400 for payloads missing required fields", async () => {
+    const handler = withGHLWebhook({})
+    const body = { foo: "bar" } // missing type, webhookId, data
+
+    const req = createMockRequest(body) as unknown as import("next/server").NextRequest
+    const response = await handler(req)
+
+    expect(response.status).toBe(400)
+  })
+
   it("calls the correct handler based on event type", async () => {
     const onContactCreate = vi.fn()
     const onContactUpdate = vi.fn()
-    const processedIds = new Set<string>()
+    const seen = new Set<string>()
+    const deduplicationCache = {
+      has: (id: string) => seen.has(id),
+      add: (id: string) => { seen.add(id) },
+    }
 
     const handler = withGHLWebhook(
       { onContactCreate, onContactUpdate },
-      { processedIds }
+      { deduplicationCache }
     )
 
     const body = {

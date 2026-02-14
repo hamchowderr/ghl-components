@@ -11,11 +11,60 @@ import type {
   GHLMessageWebhookData,
 } from "./types/webhook"
 
-const processedWebhooks = new Set<string>()
+/**
+ * TTL-bounded deduplication cache.
+ * Entries expire after `ttlMs` and the cache is capped at `maxSize` to prevent
+ * unbounded memory growth in long-running or serverless environments.
+ */
+class WebhookDeduplicationCache {
+  private cache = new Map<string, number>()
+  private readonly ttlMs: number
+  private readonly maxSize: number
+
+  constructor(ttlMs = 5 * 60 * 1000, maxSize = 10_000) {
+    this.ttlMs = ttlMs
+    this.maxSize = maxSize
+  }
+
+  has(id: string): boolean {
+    const timestamp = this.cache.get(id)
+    if (timestamp === undefined) return false
+    if (Date.now() - timestamp > this.ttlMs) {
+      this.cache.delete(id)
+      return false
+    }
+    return true
+  }
+
+  add(id: string): void {
+    // Evict oldest entries if at capacity
+    if (this.cache.size >= this.maxSize) {
+      const firstKey = this.cache.keys().next().value
+      if (firstKey !== undefined) this.cache.delete(firstKey)
+    }
+    this.cache.set(id, Date.now())
+  }
+}
+
+const processedWebhooks = new WebhookDeduplicationCache()
+
+/**
+ * Validate that a parsed object has the required webhook payload shape.
+ * This is a runtime guard since JSON.parse returns `unknown`.
+ */
+function isValidWebhookPayload(obj: unknown): obj is GHLWebhookPayload {
+  if (typeof obj !== "object" || obj === null) return false
+  const record = obj as Record<string, unknown>
+  return (
+    typeof record.type === "string" &&
+    typeof record.webhookId === "string" &&
+    record.data !== undefined
+  )
+}
 
 /**
  * Create a Next.js API route handler for GHL webhooks
- * 
+ *
  * @example
  * ```ts
  * // app/api/webhooks/ghl/route.ts
@@ -36,7 +85,7 @@ export function withGHLWebhook(
   config: GHLWebhookConfig = {}
 ) {
   const {
-    processedIds = processedWebhooks,
+    deduplicationCache = processedWebhooks,
     verifySignature: shouldVerify = true,
     onError,
   } = config
@@ -51,22 +100,29 @@ export function withGHLWebhook(
         return NextResponse.json({ error: "Invalid signature" }, { status: 401 })
       }
 
-      const payload: GHLWebhookPayload = JSON.parse(rawBody)
+      const parsed: unknown = JSON.parse(rawBody)
 
-      if (processedIds.has(payload.webhookId)) {
+      if (!isValidWebhookPayload(parsed)) {
+        console.error("[GHL Webhook] Malformed payload: missing type, webhookId, or data")
+        return NextResponse.json({ error: "Malformed payload" }, { status: 400 })
+      }
+
+      const payload = parsed
+
+      if (deduplicationCache.has(payload.webhookId)) {
         console.log(`[GHL Webhook] Duplicate, skipping: ${payload.webhookId}`)
         return NextResponse.json({ message: "Already processed" })
       }
 
       console.log(`[GHL Webhook] Processing: ${payload.type} (${payload.webhookId})`)
-      processedIds.add(payload.webhookId)
+      deduplicationCache.add(payload.webhookId)
 
       processWebhookAsync(payload, handlers, onError)
 
       return NextResponse.json({ success: true })
     } catch (error) {
       console.error("[GHL Webhook] Error:", error)
-      return NextResponse.json({ success: false, error: "Processing failed" }, { status: 200 })
+      return NextResponse.json({ success: true }, { status: 200 })
     }
   }
 }

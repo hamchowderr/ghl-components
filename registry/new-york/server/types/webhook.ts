@@ -94,8 +94,13 @@ export interface GHLWebhookHandlers {
   onUnknownEvent?: GHLWebhookHandler<unknown>
 }
 
+export interface GHLWebhookDeduplicationCache {
+  has(id: string): boolean
+  add(id: string): void
+}
+
 export interface GHLWebhookConfig {
-  processedIds?: Set<string>
+  deduplicationCache?: GHLWebhookDeduplicationCache
   verifySignature?: boolean
   onError?: (error: Error, payload: GHLWebhookPayload) => void
 }

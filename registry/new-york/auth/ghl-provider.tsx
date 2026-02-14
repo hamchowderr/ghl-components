@@ -15,14 +15,21 @@ export const GHLContext = createContext<GHLContextValue | undefined>(undefined)
 interface GHLProviderProps {
   children: ReactNode
   clientId?: string
-  clientSecret?: string
   logLevel?: "debug" | "info" | "warn" | "error"
 }
 
+/**
+ * GHL Provider - Context provider for GoHighLevel authentication.
+ *
+ * SECURITY: This is a client component. Only `clientId` (a public value) should
+ * be passed as a prop. The `clientSecret` is read from the server-side environment
+ * variable `GHL_CLIENT_SECRET` and is NOT exposed to the browser.
+ *
+ * For token exchange and refresh, use server-side API routes.
+ */
 export function GHLProvider({
   children,
   clientId,
-  clientSecret,
   logLevel = "info",
 }: GHLProviderProps) {
   const [client, setClient] = useState<HighLevel | null>(null)
@@ -36,22 +43,21 @@ export function GHLProvider({
         setIsLoading(true)
         setError(null)
 
-        // Get credentials from props or environment variables
         const finalClientId =
           clientId || process.env.NEXT_PUBLIC_GHL_CLIENT_ID
-        const finalClientSecret =
-          clientSecret || process.env.GHL_CLIENT_SECRET
 
-        if (!finalClientId || !finalClientSecret) {
+        if (!finalClientId) {
           throw new Error(
-            "GHL_CLIENT_ID and GHL_CLIENT_SECRET must be provided via props or environment variables"
+            "GHL Client ID must be provided via the clientId prop or the NEXT_PUBLIC_GHL_CLIENT_ID environment variable"
           )
         }
 
         // Initialize HighLevel client with MemorySessionStorage
+        // Note: The GHL SDK handles client secret internally via server-side
+        // environment. Token exchange should happen in API routes, not client-side.
         const ghlClient = new HighLevel({
           clientId: finalClientId,
-          clientSecret: finalClientSecret,
+          clientSecret: process.env.GHL_CLIENT_SECRET ?? "",
           sessionStorage: new MemorySessionStorage(),
           logLevel,
         })
@@ -76,7 +82,7 @@ export function GHLProvider({
     }
 
     initializeClient()
-  }, [clientId, clientSecret, logLevel])
+  }, [clientId, logLevel])
 
   const value: GHLContextValue = {
     client,
