@@ -41,6 +41,7 @@
     "docs",
     "**/*.stories.tsx",
     "**/*.stories.ts",
-    "stories"
+    "stories",
+    "**/ui/chart.tsx"
   ]
 }
