@@ -12,7 +12,7 @@
     "test": "vitest --project=unit",
     "test:storybook": "vitest --project=storybook",
     "test:ui": "vitest --ui",
-    "test:run": "vitest run",
+    "test:run": "vitest run --project=unit",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
@@ -20,6 +20,7 @@
     "test:registry:schema": "tsx scripts/tests/validate-schema.ts",
     "test:registry:endpoints": "tsx scripts/tests/test-endpoints.ts",
     "test:registry:install": "tsx scripts/tests/test-installation.ts",
+    "validate-env": "tsx scripts/validate-env.ts",
     "storybook": "storybook dev -p 6006",
     "build-storybook": "storybook build"
   },
@@ -89,6 +90,9 @@
     "react",
     "nextjs"
   ],
+  "engines": {
+    "node": ">=20.0.0"
+  },
   "author": "Chowderr",
   "license": "MIT"
 }

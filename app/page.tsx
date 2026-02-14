@@ -26,7 +26,7 @@ export default function Home() {
           <p>
             Built for the GoHighLevel community.{" "}
             <a
-              href="https://github.com/your-org/ghl-components"
+              href="https://github.com/hamchowderr/ghl-components"
               className="underline underline-offset-4 hover:text-foreground"
               target="_blank"
               rel="noopener noreferrer"
