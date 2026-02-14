@@ -92,7 +92,7 @@ function validateEnvValue(
   }
 
   // Check for zero-width characters
-  if (/[\u200B\u200C\u200D\uFEFF\u00A0]/.test(value)) {
+  if (/\u200B|\u200C|\u200D|\uFEFF|\u00A0/.test(value)) {
     results.push({
       name,
       status: "error",

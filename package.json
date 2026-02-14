@@ -12,7 +12,7 @@
     "test": "vitest --project=unit",
     "test:storybook": "vitest --project=storybook",
     "test:ui": "vitest --ui",
-    "test:run": "vitest run",
+    "test:run": "vitest run --project=unit",
     "test:coverage": "vitest run --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
