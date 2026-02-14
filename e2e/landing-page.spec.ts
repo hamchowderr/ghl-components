@@ -39,7 +39,8 @@ test.describe("Landing Page", () => {
   })
 
   test("displays hero description mentioning GoHighLevel", async ({ page }) => {
-    await expect(page.getByText(/GoHighLevel/)).toBeVisible()
+    const hero = page.locator("section").first()
+    await expect(hero.getByText("GoHighLevel", { exact: true })).toBeVisible()
   })
 
   test("displays Browse Components button linking to components section", async ({ page }) => {
@@ -49,13 +50,14 @@ test.describe("Landing Page", () => {
   })
 
   test("displays GitHub button", async ({ page }) => {
-    const githubButton = page.getByRole("link", { name: /GitHub/i })
+    const githubButton = page.getByRole("link", { name: "GitHub", exact: true })
     await expect(githubButton).toBeVisible()
   })
 
   test("displays install command section", async ({ page }) => {
-    await expect(page.getByText("Get started with a single command")).toBeVisible()
-    await expect(page.getByText(/npx shadcn/)).toBeVisible()
+    const hero = page.locator("section").first()
+    await expect(hero.getByText("Get started with a single command")).toBeVisible()
+    await expect(hero.getByText(/npx shadcn/)).toBeVisible()
   })
 
   test("displays 'Why GHL Components?' features section", async ({ page }) => {
@@ -72,7 +74,7 @@ test.describe("Landing Page", () => {
   test("displays Components section with heading", async ({ page }) => {
     const componentsSection = page.locator("#components")
     await expect(componentsSection).toBeVisible()
-    await expect(page.getByRole("heading", { name: "Components" })).toBeVisible()
+    await expect(page.getByRole("heading", { name: "Components", exact: true })).toBeVisible()
   })
 
   test("displays component category tabs", async ({ page }) => {
@@ -105,7 +107,7 @@ test.describe("Landing Page", () => {
     const browseButton = page.getByRole("link", { name: /Browse Components/i })
     await browseButton.click()
 
-    const componentsHeading = page.getByRole("heading", { name: "Components" })
+    const componentsHeading = page.getByRole("heading", { name: "Components", exact: true })
     await expect(componentsHeading).toBeInViewport()
   })
 })
