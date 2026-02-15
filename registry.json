@@ -302,6 +302,51 @@
       "dependencies": ["lucide-react"],
       "registryDependencies": ["button", "scroll-area", "alert", "skeleton", "ghl-stage-column", "ghl-pipeline-select", "ghl-provider"],
       "files": [{ "path": "registry/new-york/opportunities/ghl-pipeline-board.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-contact-detail",
+      "type": "registry:component",
+      "title": "GHL Contact Detail",
+      "description": "Full contact page view with overview, conversations, and tag management tabs.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["card", "tabs", "avatar", "badge", "skeleton", "alert", "button", "ghl-contact-card", "ghl-tag-manager", "ghl-conversation-list", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/contacts/ghl-contact-detail.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-inbox",
+      "type": "registry:component",
+      "title": "GHL Inbox",
+      "description": "Full inbox experience with conversation list, message thread, and message composer.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["ghl-conversation-list", "ghl-conversation-header", "ghl-conversation-thread", "ghl-message-composer", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/conversations/ghl-inbox.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-sales-dashboard",
+      "type": "registry:component",
+      "title": "GHL Sales Dashboard",
+      "description": "Pipeline overview with stats cards and kanban board.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["card", "skeleton", "ghl-pipeline-board", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/opportunities/ghl-sales-dashboard.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-booking-widget",
+      "type": "registry:component",
+      "title": "GHL Booking Widget",
+      "description": "Multi-step booking wizard with calendar selection, availability picker, and contact info.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["card", "button", "input", "label", "alert", "ghl-calendar-select", "ghl-availability-picker", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/calendars/ghl-booking-widget.tsx", "type": "registry:component" }]
+    },
+    {
+      "name": "ghl-lead-capture",
+      "type": "registry:component",
+      "title": "GHL Lead Capture",
+      "description": "Lead capture form that creates both a contact and an opportunity in one submission.",
+      "dependencies": ["lucide-react"],
+      "registryDependencies": ["card", "input", "label", "button", "alert", "select", "ghl-pipeline-select", "ghl-provider"],
+      "files": [{ "path": "registry/new-york/contacts/ghl-lead-capture.tsx", "type": "registry:component" }]
     }
   ]
 }

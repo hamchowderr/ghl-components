@@ -5,10 +5,7 @@ export const mockContacts = [
     lastName: "Doe",
     email: "john@example.com",
     phone: "+15551234567",
-    tags: [
-      { id: "1", name: "VIP" },
-      { id: "2", name: "Lead" },
-    ],
+    tags: ["VIP", "Lead"],
   },
   {
     id: "mock-2",
@@ -16,10 +13,7 @@ export const mockContacts = [
     lastName: "Johnson",
     email: "sarah@example.com",
     phone: "+15559876543",
-    tags: [
-      { id: "3", name: "Customer" },
-      { id: "4", name: "Referral" },
-    ],
+    tags: ["Customer", "Referral"],
   },
   {
     id: "mock-3",
@@ -27,7 +21,7 @@ export const mockContacts = [
     lastName: "Chen",
     email: "michael@example.com",
     phone: "+15555551234",
-    tags: [{ id: "2", name: "Lead" }],
+    tags: ["Lead"],
   },
 ];
 
@@ -64,6 +58,127 @@ export const mockTimeSlots = [
   { startTime: "2026-02-07T14:00:00Z", endTime: "2026-02-07T14:30:00Z" },
   { startTime: "2026-02-07T14:30:00Z", endTime: "2026-02-07T15:00:00Z" },
   { startTime: "2026-02-07T15:00:00Z", endTime: "2026-02-07T15:30:00Z" },
+];
+
+export const mockChannels = [
+  "SMS",
+  "Email",
+  "GMB",
+  "FB",
+  "IG",
+  "WhatsApp",
+  "Live_Chat",
+  "Custom",
+] as const;
+
+export const mockMessages = [
+  {
+    id: "msg-1",
+    conversationId: "conv-1",
+    locationId: "loc-1",
+    body: "Hi, I'm interested in your services. Can you tell me more?",
+    direction: "inbound" as const,
+    type: "SMS" as const,
+    contentType: "text/plain" as const,
+    dateAdded: "2026-02-14T10:00:00Z",
+    status: "delivered" as const,
+    contactId: "mock-1",
+  },
+  {
+    id: "msg-2",
+    conversationId: "conv-1",
+    locationId: "loc-1",
+    body: "Of course! We offer a full suite of marketing and CRM tools. Would you like to schedule a demo?",
+    direction: "outbound" as const,
+    type: "SMS" as const,
+    contentType: "text/plain" as const,
+    dateAdded: "2026-02-14T10:05:00Z",
+    status: "delivered" as const,
+    contactId: "mock-1",
+  },
+  {
+    id: "msg-3",
+    conversationId: "conv-1",
+    locationId: "loc-1",
+    body: "Yes, that sounds great. What times work?",
+    direction: "inbound" as const,
+    type: "SMS" as const,
+    contentType: "text/plain" as const,
+    dateAdded: "2026-02-14T10:10:00Z",
+    status: "delivered" as const,
+    contactId: "mock-1",
+  },
+  {
+    id: "msg-4",
+    conversationId: "conv-2",
+    locationId: "loc-1",
+    body: "Following up on our conversation about the proposal.",
+    direction: "outbound" as const,
+    type: "Email" as const,
+    contentType: "text/plain" as const,
+    dateAdded: "2026-02-14T09:00:00Z",
+    status: "delivered" as const,
+    contactId: "mock-2",
+  },
+  {
+    id: "msg-5",
+    conversationId: "conv-2",
+    locationId: "loc-1",
+    body: "Thanks for following up! I've reviewed the proposal and have a few questions.",
+    direction: "inbound" as const,
+    type: "Email" as const,
+    contentType: "text/plain" as const,
+    dateAdded: "2026-02-14T11:00:00Z",
+    status: "delivered" as const,
+    contactId: "mock-2",
+  },
+];
+
+export const mockPipelineStages = [
+  { id: "stage-1", name: "New Lead" },
+  { id: "stage-2", name: "Qualified" },
+  { id: "stage-3", name: "Proposal Sent" },
+  { id: "stage-4", name: "Negotiation" },
+  { id: "stage-5", name: "Closed Won" },
+];
+
+export const mockOpportunities = [
+  {
+    id: "opp-1",
+    name: "Website Redesign",
+    pipelineId: "pipe-1",
+    pipelineStageId: "stage-2",
+    status: "open" as const,
+    contactId: "mock-1",
+    monetaryValue: 5000,
+    source: "Website",
+    dateAdded: "2026-02-01T10:00:00Z",
+    dateUpdated: "2026-02-10T15:00:00Z",
+  },
+  {
+    id: "opp-2",
+    name: "SEO Campaign",
+    pipelineId: "pipe-1",
+    pipelineStageId: "stage-3",
+    status: "open" as const,
+    contactId: "mock-2",
+    monetaryValue: 3500,
+    source: "Referral",
+    dateAdded: "2026-02-05T14:00:00Z",
+    dateUpdated: "2026-02-12T09:00:00Z",
+  },
+  {
+    id: "opp-3",
+    name: "Social Media Management",
+    pipelineId: "pipe-1",
+    pipelineStageId: "stage-1",
+    status: "open" as const,
+    contactId: "mock-3",
+    monetaryValue: 2000,
+    source: "Facebook Ad",
+    dateAdded: "2026-02-10T08:00:00Z",
+    dateUpdated: "2026-02-13T16:00:00Z",
+  },
 ];
 
 export type ComponentData = {
